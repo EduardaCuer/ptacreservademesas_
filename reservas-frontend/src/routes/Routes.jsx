@@ -10,6 +10,7 @@ import Tables from "../pages/Mesas";
 import Reserve from "../pages/Reservar";
 import MyReservations from "../pages/MinhasReservas";
 import ProtectedRoute from "../components/ProtectedRoute";
+import ConsultarMesas from "../pages/ConsultarMesas"; // 🔹 Import novo
 
 export default function AppRoutes() {
   return (
@@ -48,6 +49,15 @@ export default function AppRoutes() {
           />
 
           <Route
+            path="/consultar-mesas"
+            element={
+              <ProtectedRoute>
+                <ConsultarMesas />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/reservar/:mesaId?"
             element={
               <ProtectedRoute>
@@ -64,7 +74,6 @@ export default function AppRoutes() {
               </ProtectedRoute>
             }
           />
-
         </Routes>
       </main>
     </BrowserRouter>
