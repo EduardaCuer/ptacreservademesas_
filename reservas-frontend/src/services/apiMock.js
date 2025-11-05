@@ -17,6 +17,7 @@ function findUserByEmail(email) {
   return read(KEY_USERS).find((u) => u.email === email);
 }
 
+/* ---------- AUTENTICAÇÃO ---------- */
 export const authRegister = ({ nome, email, password, role = "cliente" }) => {
   const users = read(KEY_USERS);
   if (users.find((u) => u.email === email)) {
@@ -27,7 +28,7 @@ export const authRegister = ({ nome, email, password, role = "cliente" }) => {
     nome,
     email,
     password,
-    role, // 'adm' or 'cliente'
+    role, // 'adm' ou 'cliente'
   };
   users.push(newUser);
   write(KEY_USERS, users);
@@ -68,7 +69,6 @@ export const updateProfile = ({ nome, email }) => {
   const idx = users.findIndex((u) => u.id === auth.userId);
   if (idx === -1) return { mensagem: "Usuário não encontrado", erro: true };
 
-  // check email uniqueness
   const other = users.find((u) => u.email === email && u.id !== auth.userId);
   if (other) return { mensagem: "Email em uso", erro: true };
 
@@ -79,7 +79,7 @@ export const updateProfile = ({ nome, email }) => {
   return { mensagem: "Perfil atualizado", erro: false, usuario: rest };
 };
 
-/* MESAS */
+/* ---------- MESAS ---------- */
 export const createMesa = ({ codigo, n_lugares }) => {
   const auth = JSON.parse(localStorage.getItem(KEY_AUTH) || "null");
   if (!auth) return { mensagem: "Não autenticado", erro: true };
@@ -116,7 +116,7 @@ export const deleteMesa = (id) => {
   return { mensagem: "Mesa excluída", erro: false };
 };
 
-/* RESERVAS */
+/* ---------- RESERVAS ---------- */
 export const createReserva = ({ data, n_pessoas, mesaId }) => {
   const auth = JSON.parse(localStorage.getItem(KEY_AUTH) || "null");
   if (!auth) return { mensagem: "Não autenticado", erro: true };
@@ -128,7 +128,7 @@ export const createReserva = ({ data, n_pessoas, mesaId }) => {
   const newReserva = {
     id: generateId(reservas),
     userId: auth.userId,
-    data, // yyyy-mm-dd
+    data,
     n_pessoas: Number(n_pessoas),
     mesaId: mesa.id,
     createdAt: new Date().toISOString(),
@@ -136,7 +136,7 @@ export const createReserva = ({ data, n_pessoas, mesaId }) => {
   reservas.push(newReserva);
   write(KEY_RESERVAS, reservas);
 
-  // opcional: marcar mesa como ocupada
+  // marcar mesa como ocupada
   mesa.status = "ocupada";
   write(KEY_MESAS, mesas);
 
@@ -148,7 +148,6 @@ export const listMyReservas = () => {
   if (!auth) return { mensagem: "Não autenticado", erro: true };
   const reservas = read(KEY_RESERVAS).filter((r) => r.userId === auth.userId);
   const mesas = read(KEY_MESAS);
-  // anexar dados da mesa
   const reservasComMesas = reservas.map((r) => ({
     ...r,
     mesa: mesas.find((m) => m.id === r.mesaId) || null,
@@ -156,7 +155,34 @@ export const listMyReservas = () => {
   return { mensagem: "OK", erro: false, reservas: reservasComMesas };
 };
 
-/* seed inicial (apenas se vazio) */
+/* ---------- NOVO: Excluir Reserva (corrigido) ---------- */
+export const deleteReserva = (id) => {
+  const reservas = read(KEY_RESERVAS);
+  const mesas = read(KEY_MESAS);
+
+  const reserva = reservas.find((r) => r.id === id);
+  if (!reserva) return { mensagem: "Reserva não encontrada", erro: true };
+
+  const mesa = mesas.find((m) => m.id === reserva.mesaId);
+  if (mesa) mesa.status = "disponivel";
+
+  const novasReservas = reservas.filter((r) => r.id !== id);
+  write(KEY_RESERVAS, novasReservas);
+  write(KEY_MESAS, mesas);
+
+  return { mensagem: "Reserva excluída e mesa liberada", erro: false };
+};
+
+export const updateReserva = (id, dados) => {
+  const reservas = read(KEY_RESERVAS);
+  const idx = reservas.findIndex((r) => r.id === id);
+  if (idx === -1) return { mensagem: "Reserva não encontrada", erro: true };
+  reservas[idx] = { ...reservas[idx], ...dados };
+  write(KEY_RESERVAS, reservas);
+  return { mensagem: "Reserva atualizada", erro: false, reserva: reservas[idx] };
+};
+
+/* ---------- DADOS INICIAIS ---------- */
 export const seedInitial = () => {
   if (!localStorage.getItem(KEY_USERS)) {
     write(KEY_USERS, [
@@ -174,4 +200,3 @@ export const seedInitial = () => {
     write(KEY_RESERVAS, []);
   }
 };
-

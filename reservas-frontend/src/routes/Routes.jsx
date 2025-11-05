@@ -3,12 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Profile from "../pages/Profile";
-import EditProfile from "../pages/EditProfile";
-import Tables from "../pages/Tables";
-import Reserve from "../pages/Reserve";
-import MyReservations from "../pages/MyReservations";
+import Register from "../pages/Registrar";
+import Profile from "../pages/Perfil";
+import EditProfile from "../pages/EditarPerfil";
+import Tables from "../pages/Mesas";
+import Reserve from "../pages/Reservar";
+import MyReservations from "../pages/MinhasReservas";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export default function AppRoutes() {

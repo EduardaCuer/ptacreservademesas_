@@ -26,6 +26,7 @@ function Header() {
           <button className="btn-link" onClick={handleLogout}>
             Sair
           </button>
+          
         )}
       </nav>
       <div className="userInfo">
