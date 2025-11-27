@@ -10,7 +10,9 @@ import Tables from "../pages/Mesas";
 import Reserve from "../pages/Reservar";
 import MyReservations from "../pages/MinhasReservas";
 import ProtectedRoute from "../components/ProtectedRoute";
-import ConsultarMesas from "../pages/ConsultarMesas"; // 🔹 Import novo
+import ConsultarMesas from "../pages/ConsultarMesas";
+import Cardapio from "../pages/Cardapio";
+import Cadastro from "../pages/Cadastro";
 
 export default function AppRoutes() {
   return (
@@ -21,6 +23,8 @@ export default function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Register />} />
+          <Route path="/cardapio" element={<Cardapio />} />
+          <Route path="/cadastro-simples" element={<Cadastro />} />
 
           <Route
             path="/perfil"
@@ -30,6 +34,7 @@ export default function AppRoutes() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/perfil/editar"
             element={

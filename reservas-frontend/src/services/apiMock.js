@@ -1,13 +1,10 @@
-// apiMock.js
-// Simula endpoints: /auth/login, /auth/cadastro, /perfil, /mesa, /reservas
-// Armazena em localStorage
-
 const KEY_USERS = "rm_users_v1";
 const KEY_MESAS = "rm_mesas_v1";
 const KEY_RESERVAS = "rm_reservas_v1";
-const KEY_AUTH = "rm_auth_token_v1"; // token atual (obj: {token, userId})
+const KEY_AUTH = "rm_auth_token_v1"; 
+const KEY_CLIENTES_SIMPLES = "rm_clientes_simples_v1";
+const KEY_CARDAPIO = "rm_cardapio_v1";
 
-/* helpers */
 const read = (k) => JSON.parse(localStorage.getItem(k) || "[]");
 const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 const generateId = (arr) => (arr.length ? Math.max(...arr.map((a) => a.id)) + 1 : 1);
@@ -17,7 +14,7 @@ function findUserByEmail(email) {
   return read(KEY_USERS).find((u) => u.email === email);
 }
 
-/* ---------- AUTENTICAÇÃO ---------- */
+
 export const authRegister = ({ nome, email, password, role = "cliente" }) => {
   const users = read(KEY_USERS);
   if (users.find((u) => u.email === email)) {
@@ -28,7 +25,7 @@ export const authRegister = ({ nome, email, password, role = "cliente" }) => {
     nome,
     email,
     password,
-    role, // 'adm' ou 'cliente'
+    role, 
   };
   users.push(newUser);
   write(KEY_USERS, users);
@@ -79,7 +76,7 @@ export const updateProfile = ({ nome, email }) => {
   return { mensagem: "Perfil atualizado", erro: false, usuario: rest };
 };
 
-/* ---------- MESAS ---------- */
+
 export const createMesa = ({ codigo, n_lugares }) => {
   const auth = JSON.parse(localStorage.getItem(KEY_AUTH) || "null");
   if (!auth) return { mensagem: "Não autenticado", erro: true };
@@ -88,7 +85,7 @@ export const createMesa = ({ codigo, n_lugares }) => {
     id: generateId(mesas),
     codigo,
     n_lugares,
-    status: "disponivel", // disponivel | ocupada
+    status: "disponivel", 
   };
   mesas.push(newMesa);
   write(KEY_MESAS, mesas);
@@ -116,7 +113,7 @@ export const deleteMesa = (id) => {
   return { mensagem: "Mesa excluída", erro: false };
 };
 
-/* ---------- RESERVAS ---------- */
+
 export const createReserva = ({ data, n_pessoas, mesaId }) => {
   const auth = JSON.parse(localStorage.getItem(KEY_AUTH) || "null");
   if (!auth) return { mensagem: "Não autenticado", erro: true };
@@ -136,7 +133,6 @@ export const createReserva = ({ data, n_pessoas, mesaId }) => {
   reservas.push(newReserva);
   write(KEY_RESERVAS, reservas);
 
-  // marcar mesa como ocupada
   mesa.status = "ocupada";
   write(KEY_MESAS, mesas);
 
@@ -155,7 +151,6 @@ export const listMyReservas = () => {
   return { mensagem: "OK", erro: false, reservas: reservasComMesas };
 };
 
-/* ---------- NOVO: Excluir Reserva (corrigido) ---------- */
 export const deleteReserva = (id) => {
   const reservas = read(KEY_RESERVAS);
   const mesas = read(KEY_MESAS);
@@ -182,7 +177,6 @@ export const updateReserva = (id, dados) => {
   return { mensagem: "Reserva atualizada", erro: false, reserva: reservas[idx] };
 };
 
-/* ---------- DADOS INICIAIS ---------- */
 export const seedInitial = () => {
   if (!localStorage.getItem(KEY_USERS)) {
     write(KEY_USERS, [
@@ -199,4 +193,32 @@ export const seedInitial = () => {
   if (!localStorage.getItem(KEY_RESERVAS)) {
     write(KEY_RESERVAS, []);
   }
+
+  if (!localStorage.getItem(KEY_CARDAPIO)) {
+    write(KEY_CARDAPIO, [
+      { id: 1, nome: "X-Salada", preco: 18.90 },
+      { id: 2, nome: "Pizza Média", preco: 32.00 },
+      { id: 3, nome: "Lasanha", preco: 27.50 }
+    ]);
+  }
+
+  if (!localStorage.getItem(KEY_CLIENTES_SIMPLES)) {
+    write(KEY_CLIENTES_SIMPLES, []);
+  }
+};
+
+export const cadastrarClienteSimples = (dados) => {
+  const clientes = read(KEY_CLIENTES_SIMPLES);
+  const novo = { id: generateId(clientes), ...dados };
+  clientes.push(novo);
+  write(KEY_CLIENTES_SIMPLES, clientes);
+  return { mensagem: "Cliente cadastrado!", erro: false, cliente: novo };
+};
+
+export const listarClientesSimples = () => {
+  return { mensagem: "OK", erro: false, clientes: read(KEY_CLIENTES_SIMPLES) };
+};
+
+export const listarCardapio = () => {
+  return { mensagem: "OK", erro: false, itens: read(KEY_CARDAPIO) };
 };

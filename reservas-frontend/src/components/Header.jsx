@@ -19,17 +19,21 @@ function Header() {
   return (
     <header className="header">
       <div className="brand">Reservas de Mesas</div>
+
       <nav>
         <Link to="/">Home</Link>
 
-        {/* 🔹 Novo link adicionado */}
-        {auth && <Link to="/consultar-mesas">Consultar Mesas</Link>}
+        {!auth && <Link to="/login">Login</Link>}
+        {!auth && <Link to="/cadastro">Cadastro Usuário</Link>}
+        
+        <Link to="/cadastro-simples">Cadastro Endereço</Link>
+        <Link to="/cardapio">Cardápio</Link>
 
+        {auth && <Link to="/consultar-mesas">Consultar Mesas</Link>}
         {auth && <Link to="/mesas">Mesas</Link>}
         {auth && <Link to="/minhas-reservas">Minhas Reservas</Link>}
         {auth && <Link to="/perfil">Perfil</Link>}
-        {!auth && <Link to="/login">Login</Link>}
-        {!auth && <Link to="/cadastro">Cadastro</Link>}
+
 
         {auth && (
           <button className="btn-link" onClick={handleLogout}>
