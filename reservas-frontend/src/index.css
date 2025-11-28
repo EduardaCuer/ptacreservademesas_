@@ -1,239 +1,324 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 
 :root {
-  --primary-purple: #C7B6FF;      
-  --primary-purple-dark: #6A5ACD;  
-  --primary-purple-light: #E6DEFF;
-  --bg-light: #F3F0FF;             
-  --text-dark: #2A2A2A;
-  --text-muted: #6f6f6f;
-  --danger-btn: #D9534F;
-  --danger-btn-hover: #B33A39;
+  --gold: #C8A04A;
+  --gold-light: #E8D7A8;
+  --gold-dark: #8A6A28;
+
+  --black: #ffffff;
+  --white: #000000;
+
+  --danger-btn: #B83424;
+  --danger-btn-hover: #992518;
+
+  --transition: 0.25s ease;
 }
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
+  background: var(--white);
   font-family: 'Inter', sans-serif;
-  background: var(--bg-light);
-  color: var(--text-dark);
+  color: var(--black);
   min-height: 100vh;
-  line-height: 1.6;
 }
 
+/* ================= HEADER ================= */
+
 .header {
+  width: 100%;
+  padding: 24px 36px;
+
+  background: var(--white);
+  border-bottom: 2px solid var(--gold-dark);
+
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
-  padding: 20px 32px;
-  background: var(--primary-purple);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  gap: 12px;
-  border-bottom: 3px solid var(--primary-purple-dark);
+  align-items: center;
 }
 
 .header .brand {
   font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 28px;
-  color: var(--primary-purple-dark);
+  font-size: 34px;
+  color: var(--black);
   letter-spacing: 1px;
 }
+
+/* --- MENU ESTILO PREMIUM --- */
 
 .header nav {
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 28px;
 }
 
-.header nav a,
-.header .btn-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-dark);
+.header nav a {
   text-decoration: none;
+  color: var(--black);
+  font-size: 18px;
   font-weight: 500;
-  font-size: 15px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  transition: 0.25s ease-in-out;
-  white-space: nowrap;
+  letter-spacing: 0.3px;
+
+  padding: 8px 12px;
+  border-bottom: 2px solid transparent;
+
+  transition: var(--transition);
 }
 
 .header nav a:hover {
-  background: var(--primary-purple-light);
+  border-bottom: 2px solid var(--gold);
+  color: var(--gold-dark);
+  transform: translateY(-1px);
 }
 
+/* --- BOTÃO MINHAS RESERVAS PREMIUM --- */
+
 .header .btn-link {
-  background: var(--danger-btn);
+  background: var(--gold-dark);
   color: white;
-  border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+
+  padding: 12px 24px;
+  border-radius: 6px;
+
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  transition: var(--transition);
 }
 
 .header .btn-link:hover {
-  background: var(--danger-btn-hover);
+  background: var(--gold);
+  transform: translateY(-2px);
 }
 
-.container {
-  max-width: 1100px;
-  margin: 32px auto;
-  padding: 24px;
-}
-
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  border: 2px solid var(--primary-purple);
-  box-shadow: 0 6px 30px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-  transition: 0.3s ease;
-}
-
-.card:hover {
-  border-color: var(--primary-purple-dark);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.15);
-}
-
-.form-card .form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-label {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-input,
-select,
-textarea {
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #d0c9e8;
-  background: #faf8ff;
-  color: var(--text-dark);
-  transition: 0.25s;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--primary-purple-dark);
-  box-shadow: 0 0 8px rgba(106, 90, 205, 0.3);
-  outline: none;
-}
-
-.btn {
-  padding: 12px 20px;
-  background: var(--primary-purple-dark);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 15px;
-  transition: 0.25s;
-}
-
-.btn:hover {
-  background: #5948c0;
-}
-
-.btn-outline {
-  padding: 12px 18px;
-  border-radius: 10px;
-  border: 2px solid var(--primary-purple-dark);
-  background: transparent;
-  color: var(--primary-purple-dark);
-  font-weight: 500;
-  transition: 0.25s;
-}
-
-.btn-outline:hover {
-  background: var(--primary-purple);
-}
-
-.btn-danger {
-  background: var(--danger-btn);
-  color: white;
-}
-
-.btn-danger:hover {
-  background: var(--danger-btn-hover);
-}
-
-.alert {
-  background: var(--primary-purple-light);
-  color: var(--primary-purple-dark);
-  padding: 12px 16px;
-  border-radius: 10px;
-  margin: 12px 0;
-  border-left: 4px solid var(--primary-purple-dark);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
-
-.badge {
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 13px;
-}
-
-.badge-green {
-  background: #e3ffe8;
-  color: #2e7d32;
-}
-
-.badge-red {
-  background: #ffe3e3;
-  color: #b00020;
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.form-card {
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-a.btn {
-  display: inline-block;
-  text-decoration: none;
-}
+/* ================= HERO ================= */
 
 .home {
+  width: 100%;
+  height: 84vh;
+  background-image: url('https://img.freepik.com/fotos-premium/logotipo-elegante-de-chef-dourado-com-faca-e-garfo-cruzados-em-fundo-preto_606187-20677.jpg?semt=ais_hybrid&w=740&q=80');
+  background-size: cover;
+  background-position: center;
+
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+
+  color: rgb(255, 255, 255);
+  padding: 20px;
+
+  text-shadow: 0 3px 12px rgba(0,0,0,0.7);
+}
+
+.home h1 {
+  font-family: 'Great Vibes';
+  font-size: 64px;
+  font-weight: 400;
+  margin-bottom: 10px;                   
+  color: white;
+}
+
+
+.home h2 {
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+/* --- BOTÃO RESERVAS DO HERO --- */
+
+.home .btn-reservas {
+  background: var(--danger-btn);
+  color: white;
+
+  padding: 16px 40px;
+  margin-top: 30px;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transition: var(--transition);
+}
+
+.home .btn-reservas:hover {
+  background: var(--danger-btn-hover);
+  transform: translateY(-3px);
+}
+
+/* ================= RODAPÉ ================= */
+
+footer {
+  width: 100%;
+  background: var(--white);
+  text-align: center;
+  padding: 22px;
+  border-top: 2px solid var(--gold-dark);
+}
+
+footer p {
+  color: rgb(232, 215, 168);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media (max-width: 800px) {
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .header nav {
+    gap: 20px;
+  }
+
+  .home h1 {
+    font-size: 42px;
+  }
+
+  .home h2 {
+    font-size: 18px;
+  }
+}
+
+/* ============================
+   CARDÁPIO PREMIUM COM FOTOS VIA CSS
+============================ */
+
+.cardapio-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.cardapio-container h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 46px;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 40px;
+  text-shadow: 0 0 10px rgba(200, 160, 74, 0.45);
+}
+
+/* CARD DO PRATO */
+.item-card {
+  background: #0b0b0b;
+  border: 1px solid var(--gold-dark);
+  border-radius: 14px;
+
+  padding: 20px;
+  margin-bottom: 32px;
+
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  transition: 0.25s;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 22px rgba(200, 160, 74, 0.35);
+}
+
+/* ============================
+   FOTO DO PRATO DEFINIDA NO CSS
+============================ */
+
+.item-photo {
+  width: 150px;
+  height: 120px;
+
+  border-radius: 12px;
+  border: 2px solid var(--gold-dark);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  box-shadow: 0 0 16px rgba(200, 160, 74, 0.5);
+}
+
+/* EXEMPLOS — basta trocar o link */
+.foto-hamburguer {
+  background-image: url("https://moinhoglobo.com.br/wp-content/uploads/2019/05/16-hamburguer.jpeg");
+}
+
+.foto-alfredo {
+  background-image: url("https://receitatodahora.com.br/wp-content/uploads/2021/09/como-fazer-macarrao-scaled.jpg");
+}
+
+.foto-pizza {
+  background-image: url("https://recipesblob.oetker.com.br/assets/fa238f6f683d4e8aa6260db042e82f73/750x910/pizza-caseira-lucas-alencar.webp");
+}
+
+/* ============================ TEXTO ============================ */
+
+.item-info h3 {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.item-info p {
+  color: rgb(230, 230, 230);
+  font-size: 17px;
+  line-height: 24px;
+}
+
+/* RESPONSIVO */
+@media (max-width: 750px) {
+  .item-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 25px;
+  }
+
+  .item-photo {
+    width: 85%;
+    height: 180px;
+  }
+}
+
+/* ===== RODAPÉ PREMIUM ===== */
+.footer {
+  width: 100%;
+  background: #000000;
+  border-top: 2px solid var(--gold-dark);
+  text-align: center;
+  padding: 22px;
+
+  color: var(--gold-light);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  margin-top: auto;
+  box-shadow: 0 -4px 12px rgb(200, 160, 74);
+}
+body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
-@media (max-width: 800px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
+.home {
+  flex: 1;
 }

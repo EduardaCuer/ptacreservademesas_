@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1 className="home">Bem-vindo ao sistema de Reservas de MesasS</h1>
+      <h1 className="home">RESTAURANTE  RAÍZES  NOBRES</h1>
     </div>
   );
 }
