@@ -297,28 +297,31 @@ footer p {
   }
 }
 
-/* ===== RODAPÉ PREMIUM ===== */
-.footer {
+footer {
   width: 100%;
-  background: #000000;
-  border-top: 2px solid var(--gold-dark);
+  background: var(--white);
   text-align: center;
   padding: 22px;
+  border-top: 2px solid var(--gold-dark);
+}
 
-  color: var(--gold-light);
+footer p {
+  color: rgb(232, 215, 168);
   font-size: 16px;
   font-weight: 600;
-  letter-spacing: 1px;
-
-  margin-top: auto;
-  box-shadow: 0 -4px 12px rgb(200, 160, 74);
 }
-body {
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
-.home {
+.page-content {
   flex: 1;
 }
